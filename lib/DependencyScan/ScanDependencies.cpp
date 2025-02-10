@@ -444,7 +444,7 @@ private:
 
         newArgs.push_back(*it);
       }
-      args = newArgs;
+      args = std::move(newArgs);
       return;
     };
 
