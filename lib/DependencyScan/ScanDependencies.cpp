@@ -106,9 +106,11 @@ public:
       return llvm::Error::success();
 
     // If the dependency is already finalized, nothing needs to be done.
-    if (resolvingDepInfo.isFinalized())
+    if (resolvingDepInfo.isFinalized()) {
+      llvm::errs() << "[xxxxxxx] file " << __FILE__ << " line " << __LINE__
+                   << "\n";
       return llvm::Error::success();
-
+    }
     if (auto ID = resolvingDepInfo.getClangIncludeTree())
       includeTrees.push_back(*ID);
 
@@ -1246,6 +1248,7 @@ swift::dependencies::createEncodedModuleKindAndName(ModuleDependencyID id) {
 static void resolveDependencyCommandLineArguments(
     CompilerInstance &instance, ModuleDependenciesCache &cache,
     const std::vector<ModuleDependencyID> &topoSortedModuleList) {
+  llvm::errs() << "[xxxxxxx] file " << __FILE__ << " line " << __LINE__ << "\n";
   auto moduleTransitiveClosures =
       computeTransitiveClosureOfExplicitDependencies(topoSortedModuleList,
                                                      cache);

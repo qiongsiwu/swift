@@ -597,6 +597,12 @@ bool ModuleDependenciesCacheDeserializer::readGraph(
           moduleDep, bridgingHeaderFileID, bridgingSourceFilesArrayID,
           bridgingModuleDependenciesArrayID, bridgingHeaderIncludeTreeID);
 
+      auto swiftInterfaceStorage = moduleDep.getAsSwiftInterfaceModule();
+      const_cast<std::string &>(swiftInterfaceStorage->moduleOutputPath) =
+          outputModulePath.value();
+      const_cast<std::string &>(swiftInterfaceStorage->contextHash) =
+          *contextHash;
+
       cache.recordDependency(currentModuleName, std::move(moduleDep));
       hasCurrentModule = false;
       break;
