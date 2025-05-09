@@ -1606,6 +1606,9 @@ ClangImporter::create(ASTContext &ctx,
 
   importer->Impl.IsReadingBridgingPCH = false;
 
+  importer->Impl.InstanceClone =
+      importer->cloneCompilerInstanceForPrecompiling();
+
   return importer;
 }
 
@@ -2061,6 +2064,14 @@ ClangImporter::cloneCompilerInstanceForPrecompiling() {
   clonedInstance->setOutputBackend(Impl.SwiftContext.OutputBackend);
 
   return clonedInstance;
+}
+
+clang::CompilerInstance *ClangImporter::getClangInstancePtr() {
+  return Impl.getClangInstance();
+}
+
+clang::CompilerInstance *ClangImporter::getClonedClangInstance() {
+  return Impl.InstanceClone.get();
 }
 
 bool ClangImporter::emitBridgingPCH(

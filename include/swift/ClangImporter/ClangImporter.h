@@ -177,6 +177,9 @@ private:
   std::unique_ptr<clang::CompilerInstance>
   cloneCompilerInstanceForPrecompiling();
 
+  clang::CompilerInstance *getClangInstancePtr();
+  clang::CompilerInstance *getClonedClangInstance();
+
 public:
   /// Create a new Clang importer that can import a suitable Clang
   /// module into the given ASTContext.

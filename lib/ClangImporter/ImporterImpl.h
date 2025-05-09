@@ -530,6 +530,9 @@ private:
   /// modules.
   std::unique_ptr<clang::CompilerInstance> Instance;
 
+  /// Prototype: instance copy
+  std::unique_ptr<clang::CompilerInstance> InstanceClone;
+
   /// Clang compiler action, which is used to actually run the
   /// parser.
   std::unique_ptr<clang::FrontendAction> Action;

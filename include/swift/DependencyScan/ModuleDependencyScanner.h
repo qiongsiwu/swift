@@ -16,6 +16,7 @@
 #include "swift/AST/ModuleDependencies.h"
 #include "swift/Frontend/ModuleInterfaceLoader.h"
 #include "swift/Serialization/SerializedModuleLoader.h"
+#include "clang/Frontend/CompilerInstance.h"
 #include "llvm/CAS/CASReference.h"
 #include "llvm/Support/ThreadPool.h"
 
@@ -69,6 +70,11 @@ private:
   // CAS instance.
   std::shared_ptr<llvm::cas::ObjectStore> CAS;
   std::shared_ptr<llvm::cas::ActionCache> ActionCache;
+
+  // Prototype: clang compiler instance per worker. Maybe we can
+  // move it into the clangScanningTool.
+  std::unique_ptr<clang::CompilerInstance> CI;
+
   // Restrict access to the parent scanner class.
   friend class ModuleDependencyScanner;
 };

@@ -444,10 +444,12 @@ ClangImporter::getModuleDependencies(Identifier moduleName,
                                                  ctx.SearchPathOpts.RuntimeResourcePath);
   };
 
-  auto clangModuleDependencies =
-      clangScanningTool.getModuleDependencies(
-          moduleName.str(), commandLineArgs, workingDir,
-          alreadySeenClangModules, lookupModuleOutput);
+  // std::unique_ptr<clang::CompilerInstance> CI =
+  // cloneCompilerInstanceForPrecompiling();
+
+  auto clangModuleDependencies = clangScanningTool.getModuleDependencies(
+      moduleName.str(), commandLineArgs, workingDir, alreadySeenClangModules,
+      lookupModuleOutput, getClonedClangInstance());
   if (!clangModuleDependencies) {
     auto errorStr = toString(clangModuleDependencies.takeError());
     // We ignore the "module 'foo' not found" error, the Swift dependency
